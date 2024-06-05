@@ -5,13 +5,17 @@ import "jquery"
 import "jquery_ujs"
 import "popper"
 import "bootstrap"
+import "channels"
 
 // import * as bootstrap from "bootstrap"
 
 window.enterRoom = function() {
-  localStorage['username'] = $("#username").val();
-  localStorage['usercolor'] = $("#usercolor").val();
-  setUserData(localStorage['username'], localStorage['usercolor']);
+  var agreed = confirm("IMPORTANT! This is anonymous chat that only broadcasted once. No data is saved in our server.");
+  if (agreed) {
+    localStorage['username'] = $("#username").val();
+    localStorage['usercolor'] = $("#usercolor").val();
+    setUserData(localStorage['username'], localStorage['usercolor']);
+  }
 }
 
 window.exitRoom = function() {
@@ -21,6 +25,64 @@ window.exitRoom = function() {
   $("#usercolor").val(getRandomColor());
   $("#form-room").hide();
   $("#form-enter").show();
+}
+
+window.sendMessage = function() {
+  var message = $("#message").val();
+  if (!message) {
+    alert("Message cannot be empty!");
+    return;
+  }
+
+  window.chat_app.send_message({
+    message: message,
+    username: window.username,
+    usercolor: window.usercolor
+  })
+
+  $("#message").val("");
+  $("#message").focus();
+}
+
+window.appendThread = function(data) {
+  var template = null
+  if (data.username == window.username && data.usercolor == window.usercolor) {
+    template = `
+      <div #self>
+        <div class="d-flex justify-content-end">
+          <p class="small mb-1">
+            ${data.username}
+          </p>
+        </div>
+        <div class="d-flex flex-row justify-content-end mb-3 pt-1">
+          <div>
+            <p class="small p-2 me-3 rounded-3 bg-light">
+              ${data.message}
+            </p>
+          </div>
+          <div class="rounded" style="width: 36px; height: 36px; background-color: ${data.usercolor}"></div>
+        </div>
+      </div>`;
+  } else {
+    template = `
+      <div #others>
+        <div class="d-flex justify-content-start">
+          <p class="small mb-1">
+            ${data.username}
+          </p>
+        </div>
+        <div class="d-flex flex-row justify-content-start mb-3 pt-1">
+          <div class="rounded" style="width: 36px; height: 36px; background-color: ${data.usercolor}"></div>
+          <div>
+            <p class="small p-2 ms-3 rounded-3 bg-light">
+              ${data.message}
+            </p>
+          </div>
+        </div>
+      </div>`;
+  }
+  $("#thread").append(template);
+  $("#thread").stop().animate({ scrollTop: $("#thread")[0].scrollHeight}, 500);
 }
 
 function getRandomColor() {
@@ -49,4 +111,11 @@ $(function() {
   } else {
     $("#usercolor").val(getRandomColor());
   }
+
+  // listen to enter
+  $(document).on('keypress',function(e) {
+    if(e.which == 13) {
+      window.sendMessage();
+    }
+});
 })
