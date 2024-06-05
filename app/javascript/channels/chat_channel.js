@@ -1,4 +1,4 @@
-import consumer from "./consumer"
+import consumer from "channels/consumer"
 
 window.chat_app = consumer.subscriptions.create("ChatChannel", {
   connected() {
