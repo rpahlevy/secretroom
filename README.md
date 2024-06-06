@@ -14,6 +14,6 @@ This is a simple chat room built using Ruby on Rails, Bootstrap, and jQuery Ther
 
 * Database initialization: none
 
-* How to run the test suite (TODO)
+* How to run the test suite: `rails test`
 
 * Deployment instructions: https://docs.render.com/deploy-rails
