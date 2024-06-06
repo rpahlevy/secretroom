@@ -2,7 +2,6 @@ import consumer from "channels/consumer"
 
 window.chat_app = consumer.subscriptions.create("ChatChannel", {
   connected() {
-    console.log('connected')
     // Called when the subscription is ready for use on the server
   },
 

@@ -8,7 +8,6 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def send_message(data)
-    puts data
     ActionCable.server.broadcast "secretroom_channel", data
   end
 end
