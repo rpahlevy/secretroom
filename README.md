@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a simple chat room built using Ruby on Rails, Bootstrap, and jQuery There is no database setup needed, because all messages are not saved. There is also no Auth needed to use this app.
 
-Things you may want to cover:
+* Ruby version 3.3.1
 
-* Ruby version
+* Gem version 3.5.11
 
-* System dependencies
+* System dependencies: jdk11 (eclipse)
 
-* Configuration
+* Configuration `bin/render_build.sh`
 
-* Database creation
+* Database creation: none
 
-* Database initialization
+* Database initialization: none
 
-* How to run the test suite
+* How to run the test suite (TODO)
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Deployment instructions: https://docs.render.com/deploy-rails
