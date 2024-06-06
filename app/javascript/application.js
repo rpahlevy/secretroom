@@ -115,7 +115,19 @@ $(function() {
   // listen to enter
   $(document).on('keypress',function(e) {
     if(e.which == 13) {
-      window.sendMessage();
+      var activeId = $(document.activeElement).attr('id')
+      switch (activeId) {
+        case "username":
+          window.enterRoom();
+          break;
+
+        case "message":
+          window.sendMessage();
+          break;
+      
+        default:
+          break;
+      }
     }
 });
 })
